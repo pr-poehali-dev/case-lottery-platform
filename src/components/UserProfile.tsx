@@ -4,6 +4,7 @@ import Icon from '@/components/ui/icon';
 
 interface UserProfileProps {
   balance: number;
+  depositBalance: number;
 }
 
 const mockHistory = [
@@ -14,14 +15,14 @@ const mockHistory = [
   { id: 5, caseName: 'Стартовый кейс', prize: 20, profit: 0, time: '5 часов назад' },
 ];
 
-const UserProfile = ({ balance }: UserProfileProps) => {
+const UserProfile = ({ balance, depositBalance }: UserProfileProps) => {
   const totalOpened = mockHistory.length;
   const totalProfit = mockHistory.reduce((sum, item) => sum + item.profit, 0);
   const winRate = (mockHistory.filter(item => item.profit > 0).length / totalOpened * 100).toFixed(0);
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card className="p-6 border-2 border-border">
           <div className="flex items-center gap-3">
             <div className="p-3 rounded-full bg-primary/10">
@@ -30,6 +31,18 @@ const UserProfile = ({ balance }: UserProfileProps) => {
             <div>
               <p className="text-sm text-muted-foreground">Баланс</p>
               <p className="text-2xl font-bold">{balance.toLocaleString('ru-RU')}₽</p>
+            </div>
+          </div>
+        </Card>
+
+        <Card className="p-6 border-2 border-border bg-green-500/5">
+          <div className="flex items-center gap-3">
+            <div className="p-3 rounded-full bg-green-500/10">
+              <Icon name="Banknote" size={24} className="text-green-500" />
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground">Доступно к выводу</p>
+              <p className="text-2xl font-bold text-green-500">{depositBalance.toLocaleString('ru-RU')}₽</p>
             </div>
           </div>
         </Card>
